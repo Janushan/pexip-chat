@@ -8,6 +8,8 @@ import Header from "../../components/header";
 import Participant from "./participant";
 import Message from "./message";
 
+import ChatInput from "./chatInput";
+
 import { uuid } from "uuidv4";
 
 import styles from "./home.module.scss";
@@ -42,6 +44,9 @@ class Home extends Component {
       participants: [],
       value: 0,
     };
+
+    this.onDeleteClick = this.onDeleteClick.bind(this);
+    this.onEditClick = this.onEditClick.bind(this);
   }
 
   ws = new WebSocket(URL);
@@ -71,10 +76,11 @@ class Home extends Component {
 
   // add message to the list of messages
   addMessage = (message) => {
+    message.showActions = message.name === this.state.name;
     this.setState((state) => ({ messages: [...state.messages, message] }));
   };
 
-  // on submitting a form, send the message, add it to the list and reset the input
+  // on submitting the ChatInput form, send the message, add it to the list and reset the input
   submitMessage = (messageString, name, status) => {
     const message = {
       id: uuid(),
@@ -83,6 +89,7 @@ class Home extends Component {
       timeStamp: Date.now(),
       status: status ?? false,
       action: null,
+      showActions: name === this.state.name,
     };
 
     this.ws.send(JSON.stringify(message));
@@ -148,12 +155,22 @@ class Home extends Component {
             key={index}
             id={message.id}
             action={message.action}
+            showActions={message.showActions}
             content={message.content}
             name={message.name}
             timeStamp={message.timeStamp}
             status={message.status}
+            onDeleteClick={this.onDeleteClick}
+            onEditClick={this.onEditClick}
           />
         ))}{" "}
+        <ChatInput
+          ws={this.ws}
+          onSubmitMessage={(messageString) =>
+            this.submitMessage(messageString, this.state.name)
+          }
+          // inputMessage={}
+        />
       </React.Fragment>
     );
   };
@@ -168,6 +185,40 @@ class Home extends Component {
       </React.Fragment>
     );
   };
+
+  // when message delete button is clicked then change the message and update the state
+  onDeleteClick(id, name) {
+    const messages = this.state.messages.map((message) => {
+      if (message.id === id && message.name === name) {
+        message.action = "DELETED";
+        message.showActions = false;
+        message.content = "This message was deleted";
+      }
+      return message;
+    });
+
+    this.setState({
+      messages: messages,
+    });
+  }
+
+  // when message delete button is clicked then SOMETHING
+  onEditClick(id, name, content) {
+    const messages = this.state.messages.map((message) => {
+      if (message.id === id && message.name === name) {
+        message.action = "EDITED";
+        message.content = content;
+        console.log(content);
+        console.log(message.content);
+      }
+      return message;
+    });
+    console.log(messages);
+
+    this.setState({
+      messages: messages,
+    });
+  }
 
   render() {
     return (
