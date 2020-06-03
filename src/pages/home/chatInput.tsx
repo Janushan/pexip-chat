@@ -9,7 +9,6 @@ import styles from "./chatInput.module.scss";
 
 type InputProps = {
   onSubmitMessage: any;
-  inputMessage?: string;
 };
 type InputState = {
   message: string;
@@ -32,7 +31,6 @@ class ChatInput extends Component<InputProps, InputState> {
   addInputMessage = (event: any) => {
     this.setState({
       message: event.target.value,
-      // message: `${event.target.value} ${this.props.inputMessage} `,
     });
   };
 
