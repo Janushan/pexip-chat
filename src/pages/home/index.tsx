@@ -169,7 +169,6 @@ class Home extends Component {
           onSubmitMessage={(messageString) =>
             this.submitMessage(messageString, this.state.name)
           }
-          // inputMessage={}
         />
       </React.Fragment>
     );
