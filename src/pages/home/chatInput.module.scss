@@ -1,0 +1,14 @@
+$containerSpacing: 1.25rem;
+
+.input {
+  margin-left: $containerSpacing;
+  margin-top: $containerSpacing;
+  margin-bottom: $containerSpacing;
+  // margin-right: $containerSpacing;
+  flex: 1;
+}
+
+.button {
+  margin-right: $containerSpacing;
+  margin-left: $containerSpacing;
+}

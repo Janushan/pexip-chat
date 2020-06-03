@@ -1,0 +1,17 @@
+@import "../../theme/colours.scss";
+@import "../../theme/common.scss";
+
+.container {
+  @extend .panelContainer;
+}
+
+.participant {
+  // background-color: red;
+  display: flex;
+  height: 5rem;
+  border-bottom: 2px $border solid;
+  width: 100%;
+  .name {
+    margin-left: 2rem;
+  }
+}
