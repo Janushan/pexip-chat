@@ -125,6 +125,7 @@ class Home extends Component {
       if (person.name === name) {
         return index;
       }
+      return index;
     });
 
     const participants = this.state.participants.splice(targetParticipant, 1);
