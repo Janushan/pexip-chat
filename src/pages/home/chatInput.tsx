@@ -21,6 +21,7 @@ class ChatInput extends Component<InputProps, InputState> {
     showEmojis: false,
   };
 
+  // Adds emoji to the message with a space
   addEmoji = (event: any) => {
     let emoji = event.native;
     this.setState({
@@ -28,12 +29,14 @@ class ChatInput extends Component<InputProps, InputState> {
     });
   };
 
+  // Adds the message
   addInputMessage = (event: any) => {
     this.setState({
       message: event.target.value,
     });
   };
 
+  // Shows the emoji menu
   showEmojis = (event: any) => {
     this.setState(
       {
@@ -43,6 +46,7 @@ class ChatInput extends Component<InputProps, InputState> {
     );
   };
 
+  // Closes the emoji menu
   closeMenu = (event: any) => {
     //@ts-ignore
     if (this.emojiPicker !== null && !this.emojiPicker.contains(event.target)) {
@@ -55,6 +59,7 @@ class ChatInput extends Component<InputProps, InputState> {
     }
   };
 
+  // Renders the emoji selecter if the state is true
   emojiOption() {
     return (
       <Grid>
