@@ -1,0 +1,52 @@
+@import "../../theme/colours.scss";
+@import "../../theme/common.scss";
+
+.container {
+  @extend .panelContainer;
+}
+
+.message {
+  // background-color: red;
+  display: flex;
+  padding-top: 1.5rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  // max-width: 40vw;
+  .name {
+    margin-right: 1rem;
+  }
+  .timeStamp {
+    color: $greyText100;
+    font-size: 16;
+  }
+  .content {
+    line-height: 1.7;
+  }
+  .status {
+    color: $greyText200;
+  }
+  .button {
+    height: 1.5rem;
+    font-size: 0.8rem;
+    width: 4rem;
+    border-radius: 0.2rem;
+    font-family: "Open Sans", "Arial", "sans-serif";
+    font-weight: 600;
+  }
+  .editButton {
+    @extend .button;
+    margin-top: 0;
+    margin-left: 1rem;
+    background-color: white;
+    border: 1px solid lightgrey;
+  }
+  .deleteButton {
+    @extend .button;
+    margin-left: 1rem;
+    // margin-right: 3.5rem;
+  }
+  .action {
+    @extend .status;
+    font-style: italic !important;
+  }
+}

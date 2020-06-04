@@ -1,0 +1,31 @@
+@import "./theme/colours.scss";
+
+body {
+  background-color: #ebebeb;
+  color: #11263f;
+}
+
+a {
+  text-decoration: none;
+  color: $url;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+.Mui-selected {
+  background-color: white;
+}
+
+.PrivateTabIndicator-colorSecondary-3,
+.PrivateTabIndicator-root-1,
+.PrivateTabIndicator-root-17,
+.PrivateTabIndicator-colorSecondary-19,
+.MuiTabs-indicator {
+  display: none !important;
+}
+
+.themeSwitchContainer {
+  padding-left: 1.5rem;
+  margin-top: 2rem;
+}
