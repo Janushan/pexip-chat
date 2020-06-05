@@ -14,7 +14,6 @@
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
-    "react-editext": "^3.16.0",
     "react-linkify": "^1.0.0-alpha",
     "react-scripts": "3.4.1",
     "uuidv4": "^6.1.0"
@@ -43,8 +42,12 @@
   "devDependencies": {
     "@types/classnames": "^2.2.10",
     "@types/emoji-mart": "^3.0.2",
+    "@types/enzyme": "^3.10.5",
     "@types/jest": "^25.2.3",
     "@types/react": "^16.9.35",
+    "@types/react-dom": "^16.9.8",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.2",
     "ts-loader": "^7.0.5",
     "typescript": "^3.9.3"
   }
