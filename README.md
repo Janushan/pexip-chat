@@ -1,16 +1,26 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a basic chat application using React.js and a Node.js websocket server.
 
-## Available Scripts
+## Project Setup
 
-In the project directory, you can run:
+### Backend
 
-### `yarn start`
+To start the backend server run `yarn start` or `npm start`
+
+The server will run on port 3030
+
+### Frontend
+
+To start the frontend project run `yarn start` or `npm start`
 
 Runs the app in the development mode.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.<br />
 You will also see any lint errors in the console.
+
+***
+
+## Misc
 
 ### `yarn test`
 
