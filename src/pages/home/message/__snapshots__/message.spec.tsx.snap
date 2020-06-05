@@ -1,0 +1,55 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<Message/> renders message WITH action buttons - edit/delete 1`] = `
+"<WithStyles(ForwardRef(Grid)) container={true} className=\\"message\\" alignItems=\\"center\\">
+  <WithStyles(ForwardRef(Grid)) container={true} alignItems=\\"center\\">
+    <WithStyles(ForwardRef(Grid))>
+      <WithStyles(ForwardRef(Grid)) container={true} direction=\\"row\\" alignItems=\\"center\\">
+        <WithStyles(ForwardRef(Typography)) variant=\\"h5\\" className=\\"name\\">
+          Janu Shan
+        </WithStyles(ForwardRef(Typography))>
+        <WithStyles(ForwardRef(Typography)) variant=\\"body1\\" className=\\"timeStamp\\">
+          Invalid date
+        </WithStyles(ForwardRef(Typography))>
+      </WithStyles(ForwardRef(Grid))>
+      <Linkify componentDecorator={[Function]} hrefDecorator={[Function]} matchDecorator={[Function]} textDecorator={[Function]}>
+        <WithStyles(ForwardRef(Grid)) container={true} direction=\\"row\\" alignItems=\\"center\\">
+          <WithStyles(ForwardRef(Grid)) container={true}>
+            <WithStyles(ForwardRef(Typography)) variant=\\"body1\\" className=\\"content\\">
+              Hi there
+            </WithStyles(ForwardRef(Typography))>
+          </WithStyles(ForwardRef(Grid))>
+          <WithStyles(ForwardRef(Button)) variant=\\"outlined\\" className=\\"button\\" onClick={[Function: onClick]}>
+            Edit
+          </WithStyles(ForwardRef(Button))>
+          <WithStyles(ForwardRef(Button)) variant=\\"outlined\\" className=\\"deleteButton\\" onClick={[Function: onClick]}>
+            Delete
+          </WithStyles(ForwardRef(Button))>
+        </WithStyles(ForwardRef(Grid))>
+      </Linkify>
+    </WithStyles(ForwardRef(Grid))>
+  </WithStyles(ForwardRef(Grid))>
+</WithStyles(ForwardRef(Grid))>"
+`;
+
+exports[`<Message/> renders message WITHOUT action buttons - edit/delete 1`] = `
+"<WithStyles(ForwardRef(Grid)) container={true} className=\\"message\\" alignItems=\\"center\\">
+  <WithStyles(ForwardRef(Grid)) container={true} alignItems=\\"center\\">
+    <WithStyles(ForwardRef(Grid))>
+      <WithStyles(ForwardRef(Grid)) container={true} direction=\\"row\\" alignItems=\\"center\\">
+        <WithStyles(ForwardRef(Typography)) variant=\\"h5\\" className=\\"name\\">
+          Janu Shan
+        </WithStyles(ForwardRef(Typography))>
+        <WithStyles(ForwardRef(Typography)) variant=\\"body1\\" className=\\"timeStamp\\">
+          Invalid date
+        </WithStyles(ForwardRef(Typography))>
+      </WithStyles(ForwardRef(Grid))>
+      <Linkify componentDecorator={[Function]} hrefDecorator={[Function]} matchDecorator={[Function]} textDecorator={[Function]}>
+        <WithStyles(ForwardRef(Typography)) variant=\\"body1\\" className=\\"content\\">
+          Hi there
+        </WithStyles(ForwardRef(Typography))>
+      </Linkify>
+    </WithStyles(ForwardRef(Grid))>
+  </WithStyles(ForwardRef(Grid))>
+</WithStyles(ForwardRef(Grid))>"
+`;

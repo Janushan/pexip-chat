@@ -1,0 +1,18 @@
+export const nameList = [
+  "Krig Cvetkovic",
+  "Iocasta Berilen",
+  "Shinnan Wagner",
+  "Milly Cook",
+  "Joel Reed",
+  "Stephanie Crawford",
+  "Rowan Boyle",
+  "Cleo Carson",
+  "Cierra Vega",
+  "Alden Cantrell",
+  "Kierra Gentry",
+  "Pierre Cox",
+  "Thomas Crane",
+  "Miranda Shaffer",
+  "Bradyn Kramer",
+  "Alvaro Mcgee",
+];

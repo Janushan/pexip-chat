@@ -1,5 +1,5 @@
-@import "../../theme/colours.scss";
-@import "../../theme/common.scss";
+@import "../../../theme/colours.scss";
+@import "../../../theme/common.scss";
 
 .container {
   @extend .panelContainer;
@@ -9,8 +9,8 @@
   // background-color: red;
   display: flex;
   padding-top: 1.5rem;
-  margin-left: 2rem;
-  margin-right: 2rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
   // max-width: 40vw;
   .name {
     margin-right: 1rem;
@@ -21,6 +21,8 @@
   }
   .content {
     line-height: 1.7;
+    padding-right: 0rem;
+    word-break: break-word;
   }
   .status {
     color: $greyText200;
@@ -28,22 +30,23 @@
   .button {
     height: 1.5rem;
     font-size: 0.8rem;
-    width: 4rem;
+    width: 5rem;
     border-radius: 0.2rem;
     font-family: "Open Sans", "Arial", "sans-serif";
     font-weight: 600;
-  }
-  .editButton {
-    @extend .button;
-    margin-top: 0;
-    margin-left: 1rem;
-    background-color: white;
-    border: 1px solid lightgrey;
+    margin-top: 0.5rem;
   }
   .deleteButton {
     @extend .button;
     margin-left: 1rem;
-    // margin-right: 3.5rem;
+  }
+  .cancelButton {
+    @extend .deleteButton;
+    color: red;
+  }
+  .saveButton {
+    @extend .button;
+    color: green;
   }
   .action {
     @extend .status;

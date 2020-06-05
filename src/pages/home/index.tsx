@@ -7,33 +7,19 @@ import TabPanel from "../../components/tabPanel";
 import Header from "../../components/header";
 import Participant from "./participant";
 import Message from "./message";
-
 import ChatInput from "./chatInput";
 
 import { uuid } from "uuidv4";
 
+import { nameList } from "../../helpers/nameList";
+import {
+  URL,
+  MEETING_BOT,
+  MESSAGE_EDITED,
+  MESSAGE_DELETED,
+} from "../../constants";
+
 import styles from "./home.module.scss";
-
-const URL = "ws://localhost:3030";
-
-const nameList = [
-  "Krig Cvetkovic",
-  "Iocasta Berilen",
-  "Shinnan Wagner",
-  "Milly Cook",
-  "Joel Reed",
-  "Stephanie Crawford",
-  "Rowan Boyle",
-  "Cleo Carson",
-  "Cierra Vega",
-  "Alden Cantrell",
-  "Kierra Gentry",
-  "Pierre Cox",
-  "Thomas Crane",
-  "Miranda Shaffer",
-  "Bradyn Kramer",
-  "Alvaro Mcgee",
-];
 
 class Home extends Component {
   constructor(props) {
@@ -54,7 +40,9 @@ class Home extends Component {
   componentDidMount() {
     this.ws.onopen = () => {
       console.log(`${this.state.name} CONNECTED`);
-      this.submitMessage(`${this.state.name} joined.`, "Meetingbot", true);
+      this.submitMessage(
+        this.onSubmitClick(`${this.state.name} joined.`, MEETING_BOT, true)
+      );
     };
 
     this.ws.onmessage = (evt) => {
@@ -65,7 +53,9 @@ class Home extends Component {
     };
 
     this.ws.onclose = () => {
-      this.submitMessage(`${this.state.name} left.`, "Meetingbot", true);
+      this.submitMessage(
+        this.onSubmitClick(`${this.state.name} left.`, MEETING_BOT, true)
+      );
       console.log(`${this.state.name} DISCONNECTED`);
       // automatically try to reconnect on connection loss
       this.setState({
@@ -77,25 +67,34 @@ class Home extends Component {
   // add message to the list of messages
   addMessage = (message) => {
     message.showActions = message.name === this.state.name;
-    this.setState((state) => ({ messages: [...state.messages, message] }));
+
+    // update message if edited/deleted
+    if (
+      message.action === MESSAGE_DELETED ||
+      message.action === MESSAGE_EDITED
+    ) {
+      const messages = this.state.messages.map((msg) => {
+        if (msg.id === message.id) {
+          msg = message;
+        }
+        return msg;
+      });
+
+      this.setState({
+        messages: messages,
+      });
+    } else {
+      this.setState((state) => ({ messages: [...state.messages, message] }));
+    }
   };
 
   // on submitting the ChatInput form, send the message, add it to the list and reset the input
-  submitMessage = (messageString, name, status) => {
-    const message = {
-      id: uuid(),
-      name: name ?? this.state.name,
-      content: messageString,
-      timeStamp: Date.now(),
-      status: status ?? false,
-      action: null,
-      showActions: name === this.state.name,
-    };
-
+  submitMessage = (message) => {
     this.ws.send(JSON.stringify(message));
     this.addMessage(message);
     this.checkNewParticipant(message);
   };
+
   // checks if the participant is new and then decides whether they should be added/removed
   checkNewParticipant(message) {
     let person = message.content;
@@ -103,15 +102,16 @@ class Home extends Component {
 
     person = person.substring(0, lastIndex);
 
-    if (message.name === "Meetingbot" && message.content.includes("joined.")) {
+    if (message.name === MEETING_BOT && message.content.includes("joined.")) {
       this.addParticipant(person);
     } else if (
-      message.name === "Meetingbot" &&
+      message.name === MEETING_BOT &&
       message.content.includes("left.")
     ) {
       this.removeParticipant(person);
     }
   }
+
   // creates and adds participant to the participant list
   addParticipant = (name) => {
     const person = { id: uuid(), name: name };
@@ -119,6 +119,7 @@ class Home extends Component {
       participants: [person, ...state.participants],
     }));
   };
+
   // removes participant from participant list
   removeParticipant = (name) => {
     const targetParticipant = this.state.participants.map((person, index) => {
@@ -146,10 +147,58 @@ class Home extends Component {
     };
   }
 
+  // when message delete button is clicked then change the message and update the state
+  onDeleteClick(id, name) {
+    const messages = this.state.messages.map((message) => {
+      if (message.id === id && message.name === name) {
+        message.action = MESSAGE_DELETED;
+        message.showActions = false;
+        message.content = "This message was deleted";
+        this.submitMessage(message);
+      }
+      return message;
+    });
+
+    this.setState({
+      messages: messages,
+    });
+  }
+
+  // when message edit button is clicked then display the message differently
+  onEditClick(id, name, content) {
+    const messages = this.state.messages.map((message) => {
+      if (message.id === id && message.name === name) {
+        message.action = MESSAGE_EDITED;
+        message.content = `${content} (edited)`;
+        this.submitMessage(message);
+      }
+      return message;
+    });
+
+    this.setState({
+      messages: messages,
+    });
+  }
+
+  // construct new message
+  onSubmitClick = (messageString, name, status) => {
+    const message = {
+      id: uuid(),
+      name: name ?? this.state.name,
+      content: messageString,
+      timeStamp: Date.now(),
+      status: status ?? false,
+      action: null,
+      showActions: name === this.state.name,
+    };
+
+    return message;
+  };
+
   // renders chat and chat input
   renderChat = () => {
     return (
-      <React.Fragment>
+      <>
         {" "}
         {this.state.messages.map((message, index) => (
           <Message
@@ -168,57 +217,25 @@ class Home extends Component {
         <ChatInput
           ws={this.ws}
           onSubmitMessage={(messageString) =>
-            this.submitMessage(messageString, this.state.name)
+            this.submitMessage(
+              this.onSubmitClick(messageString, this.state.name)
+            )
           }
         />
-      </React.Fragment>
+      </>
     );
   };
 
   // render list of participants
   renderParticipants = () => {
     return (
-      <React.Fragment>
+      <>
         {this.state.participants.map((person, index) => (
           <Participant key={index} name={person.name} />
         ))}
-      </React.Fragment>
+      </>
     );
   };
-
-  // when message delete button is clicked then change the message and update the state
-  onDeleteClick(id, name) {
-    const messages = this.state.messages.map((message) => {
-      if (message.id === id && message.name === name) {
-        message.action = "DELETED";
-        message.showActions = false;
-        message.content = "This message was deleted";
-      }
-      return message;
-    });
-
-    this.setState({
-      messages: messages,
-    });
-  }
-
-  // when message delete button is clicked then SOMETHING
-  onEditClick(id, name, content) {
-    const messages = this.state.messages.map((message) => {
-      if (message.id === id && message.name === name) {
-        message.action = "EDITED";
-        message.content = content;
-        console.log(content);
-        console.log(message.content);
-      }
-      return message;
-    });
-    console.log(messages);
-
-    this.setState({
-      messages: messages,
-    });
-  }
 
   render() {
     return (
